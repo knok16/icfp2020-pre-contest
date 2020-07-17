@@ -9,6 +9,7 @@ interface BooleanGlyph : Glyph {
 
 object EqualitySign : Glyph
 object ApplyGlyph : Glyph
+object CommunicateAction : Glyph
 
 interface Operator : Glyph {
     object IntegerDivision : Operator
@@ -16,6 +17,7 @@ interface Operator : Glyph {
     object Sum : Operator
     object Dec : Operator
     object Inc : Operator
+    object Negate : Operator
 }
 
 interface Comparision : Glyph {
@@ -23,15 +25,19 @@ interface Comparision : Glyph {
     object Equals : Comparision
 }
 
+data class Reference(val index: Long) : Glyph
+
 data class Variable(val index: Long) : Glyph
 
 val defaultGlyphRepository: Map<Long, Glyph> = mapOf(
     0L to ApplyGlyph,
     12L to EqualitySign,
+    174L to CommunicateAction,
     // constants
     2L to BooleanGlyph.True,
     8L to BooleanGlyph.False,
     // operators
+    10L to Operator.Negate,
     40L to Operator.IntegerDivision,
     146L to Operator.Product,
     365L to Operator.Sum,
@@ -86,7 +92,7 @@ fun parseGlyph(bitMap: BitMap, glyphRepository: Map<Long, Glyph> = defaultGlyphR
 
                     Variable(indexValue)
                 } else {
-                    null
+                    Reference(numberValue)
                 }
             }
         }

@@ -30,6 +30,7 @@ fun visualize(svgFileName: String, all: BitMap, elements: List<BitMap>, cellSize
                     is Variable -> "x" + it.index to "blue"
                     is EqualitySign -> "=" to "yellow"
                     is ApplyGlyph -> "ap" to "yellow"
+                    is Operator.Negate -> "neg" to "yellow"
                     is Operator.IntegerDivision -> "/" to "yellow"
                     is Operator.Product -> "*" to "yellow"
                     is Operator.Sum -> "+" to "yellow"
@@ -39,6 +40,8 @@ fun visualize(svgFileName: String, all: BitMap, elements: List<BitMap>, cellSize
                     is BooleanGlyph.True -> "true" to "yellow"
                     is Comparision.LessThan -> "&lt;" to "yellow"
                     is Comparision.Equals -> "==" to "yellow"
+                    is Reference -> "r" + it.index to "red"
+                    is CommunicateAction -> "com" to "pink"
                     else -> throw IllegalArgumentException("unknown glyph")
                 }
             } ?: "" to "gray"

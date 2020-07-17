@@ -3,7 +3,7 @@ import javax.imageio.ImageIO
 
 
 fun main() {
-    File("signals").listFiles()?.forEach { file ->
+    File("messages").listFiles()?.forEach { file ->
         println(file.name)
 
         val image = ImageIO.read(file)

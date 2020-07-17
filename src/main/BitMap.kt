@@ -44,12 +44,12 @@ fun bitMapFrom(array: Array<BooleanArray>): BitMap {
     return BitMap(width, height, array, 0, 0)
 }
 
-fun figureOutTileSize(image: BufferedImage, trueColor: Int = Color.WHITE.rgb): Int =
+fun figureOutTileSize(image: BufferedImage, emptyColor: Int = Color.BLACK.rgb): Int =
     (0 until image.height).firstOrNull { row ->
-        (0 until image.width).any { column -> image.getRGB(column, row) != trueColor }
+        (0 until image.width).any { column -> image.getRGB(column, row) == emptyColor }
     } ?: image.height
 
-fun readMessage(image: BufferedImage, tileSize: Int, trueColor: Int = Color.WHITE.rgb): BitMap {
+fun readMessage(image: BufferedImage, tileSize: Int, emptyColor: Int = Color.BLACK.rgb): BitMap {
     assert(image.width % tileSize == 0)
     assert(image.height % tileSize == 0)
 
@@ -58,7 +58,7 @@ fun readMessage(image: BufferedImage, tileSize: Int, trueColor: Int = Color.WHIT
 
     val bitMap = Array(height) { row ->
         BooleanArray(width) { column ->
-            image.getRGB(column * tileSize, row * tileSize) == trueColor
+            image.getRGB(column * tileSize, row * tileSize) != emptyColor
         }
     }
 
