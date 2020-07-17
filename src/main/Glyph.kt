@@ -77,7 +77,8 @@ fun parseGlyph(bitMap: BitMap, glyphRepository: Map<Long, Glyph> = defaultGlyphR
             else if (numberValue in glyphRepository) {
                 glyphRepository.getValue(numberValue)
             } else {
-                val isVariable = bitMap[1, 1] &&
+                val isVariable = bitMap.width >= 4 &&
+                        bitMap[1, 1] &&
                         (1 until bitMap.width).all { column -> bitMap[column, bitMap.height - 1] } &&
                         (1 until bitMap.height).all { row -> bitMap[bitMap.width - 1, row] } &&
                         (2 until bitMap.width - 1).none { column -> bitMap[column, 1] } &&

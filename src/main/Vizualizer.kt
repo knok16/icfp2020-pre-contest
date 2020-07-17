@@ -1,7 +1,7 @@
 import java.io.FileWriter
 import java.io.PrintWriter
 
-fun visualize(svgFileName: String, all: BitMap, elements: List<BitMap>, cellSize: Int = 8) {
+fun visualize(svgFileName: String, all: BitMap, elements: List<BitMap>, cellSize: Int = 20) {
     val style = "paint-order: stroke; fill: white; stroke: black; stroke-width: 2px; font:${cellSize * 2}px bold sans;"
 
     PrintWriter(FileWriter(svgFileName)).use { output ->
