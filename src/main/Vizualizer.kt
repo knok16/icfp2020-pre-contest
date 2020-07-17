@@ -9,7 +9,7 @@ fun visualize(svgFileName: String, all: BitMap, elements: List<BitMap>, cellSize
         output.println("""<rect width="${all.width * cellSize}" height="${all.height * cellSize}" style="fill:black"/>""")
 
         fun point(x: Int, y: Int) {
-            output.println("""<rect x="${x * cellSize}" y="${y * cellSize}" width="7" height="7" style="fill:white"/>""")
+            output.println("""<rect x="${x * cellSize}" y="${y * cellSize}" width="${cellSize - 1}" height="${cellSize - 1}" style="fill:white"/>""")
         }
 
         fun annotate(x: Int, y: Int, width: Int, height: Int, color: String, text: String) {
@@ -24,27 +24,28 @@ fun visualize(svgFileName: String, all: BitMap, elements: List<BitMap>, cellSize
 
 
         elements.forEach { element ->
-            val (text, color) = parseGlyph(element)?.let {
-                when (it) {
-                    is Number -> it.value.toString() to "green"
-                    is Variable -> "x" + it.index to "blue"
-                    is EqualitySign -> "=" to "yellow"
-                    is ApplyGlyph -> "ap" to "yellow"
-                    is Operator.Negate -> "neg" to "yellow"
-                    is Operator.IntegerDivision -> "/" to "yellow"
-                    is Operator.Product -> "*" to "yellow"
-                    is Operator.Sum -> "+" to "yellow"
-                    is Operator.Dec -> "dec" to "yellow"
-                    is Operator.Inc -> "inc" to "yellow"
-                    is BooleanGlyph.False -> "false" to "yellow"
-                    is BooleanGlyph.True -> "true" to "yellow"
-                    is Comparision.LessThan -> "&lt;" to "yellow"
-                    is Comparision.Equals -> "==" to "yellow"
-                    is Reference -> "r" + it.index to "red"
-                    is CommunicateAction -> "com" to "pink"
-                    else -> throw IllegalArgumentException("unknown glyph")
-                }
-            } ?: "" to "gray"
+            val glyph = parseGlyph(element)
+
+            val text = glyph?.shortName ?: ""
+            val color = when (glyph) {
+                is Number -> "green"
+                is Variable -> "blue"
+                is EqualitySign -> "yellow"
+                is ApplyGlyph -> "yellow"
+                is Operator.Negate -> "yellow"
+                is Operator.IntegerDivision -> "yellow"
+                is Operator.Product -> "yellow"
+                is Operator.Sum -> "yellow"
+                is Operator.Dec -> "yellow"
+                is Operator.Inc -> "yellow"
+                is BooleanGlyph.False -> "yellow"
+                is BooleanGlyph.True -> "yellow"
+                is Comparision.LessThan -> "yellow"
+                is Comparision.Equals -> "yellow"
+                is Reference -> "red"
+                is CommunicateAction -> "pink"
+                else -> throw IllegalArgumentException("unknown glyph")
+            }
 
             annotate(element.columnOffset, element.rowOffset, element.width, element.height, color, text)
         }

@@ -1,33 +1,34 @@
-interface Glyph
+abstract class Glyph(val shortName: String)
 
-data class Number(val value: Long) : Glyph
+data class Number(val value: Long) : Glyph(value.toString())
 
-interface BooleanGlyph : Glyph {
-    object False : BooleanGlyph
-    object True : BooleanGlyph
+abstract class BooleanGlyph(shortName: String) : Glyph(shortName) {
+    object False : BooleanGlyph("f")
+    object True : BooleanGlyph("t")
 }
 
-object EqualitySign : Glyph
-object ApplyGlyph : Glyph
-object CommunicateAction : Glyph
+object EqualitySign : Glyph("=")
+object ApplyGlyph : Glyph("ap")
+object SCombinator : Glyph("S")
+object CommunicateAction : Glyph("send")
 
-interface Operator : Glyph {
-    object IntegerDivision : Operator
-    object Product : Operator
-    object Sum : Operator
-    object Dec : Operator
-    object Inc : Operator
-    object Negate : Operator
+abstract class Operator(shortName: String) : Glyph(shortName) {
+    object IntegerDivision : Operator("/")
+    object Product : Operator("*")
+    object Sum : Operator("+")
+    object Dec : Operator("dec")
+    object Inc : Operator("inc")
+    object Negate : Operator("neg")
 }
 
-interface Comparision : Glyph {
-    object LessThan : Comparision
-    object Equals : Comparision
+abstract class Comparision(shortName: String) : Glyph(shortName) {
+    object LessThan : Comparision("<")
+    object Equals : Comparision("==")
 }
 
-data class Reference(val index: Long) : Glyph
+data class Reference(val index: Long) : Glyph("r$index")
 
-data class Variable(val index: Long) : Glyph
+data class Variable(val index: Long) : Glyph("x$index")
 
 val defaultGlyphRepository: Map<Long, Glyph> = mapOf(
     0L to ApplyGlyph,
