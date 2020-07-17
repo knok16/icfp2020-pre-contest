@@ -31,20 +31,12 @@ fun visualize(svgFileName: String, all: BitMap, elements: List<BitMap>, cellSize
                 is Number -> "green"
                 is Variable -> "blue"
                 is EqualitySign -> "yellow"
-                is ApplyGlyph -> "yellow"
-                is Operator.Negate -> "yellow"
-                is Operator.IntegerDivision -> "yellow"
-                is Operator.Product -> "yellow"
-                is Operator.Sum -> "yellow"
-                is Operator.Dec -> "yellow"
-                is Operator.Inc -> "yellow"
-                is BooleanGlyph.False -> "yellow"
-                is BooleanGlyph.True -> "yellow"
-                is Comparision.LessThan -> "yellow"
-                is Comparision.Equals -> "yellow"
+                is Combinator -> "yellow"
+                is Operator -> "yellow"
+                is Comparision -> "yellow"
                 is Reference -> "red"
                 is CommunicateAction -> "pink"
-                else -> throw IllegalArgumentException("unknown glyph")
+                else -> "gray"
             }
 
             annotate(element.columnOffset, element.rowOffset, element.width, element.height, color, text)

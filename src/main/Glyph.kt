@@ -2,15 +2,18 @@ abstract class Glyph(val shortName: String)
 
 data class Number(val value: Long) : Glyph(value.toString())
 
-abstract class BooleanGlyph(shortName: String) : Glyph(shortName) {
-    object False : BooleanGlyph("f")
-    object True : BooleanGlyph("t")
-}
-
-object EqualitySign : Glyph("=")
-object ApplyGlyph : Glyph("ap")
-object SCombinator : Glyph("S")
 object CommunicateAction : Glyph("send")
+object EqualitySign : Glyph("=")
+
+abstract class Combinator(shortName: String) : Glyph(shortName) {
+    object Apply : Combinator("ap")
+    object I : Combinator("I")
+    object S : Combinator("S")
+    object C : Combinator("C")
+    object B : Combinator("B")
+    object K : Combinator("K")
+    object notK : Combinator("~K")
+}
 
 abstract class Operator(shortName: String) : Glyph(shortName) {
     object IntegerDivision : Operator("/")
@@ -31,12 +34,16 @@ data class Reference(val index: Long) : Glyph("r$index")
 data class Variable(val index: Long) : Glyph("x$index")
 
 val defaultGlyphRepository: Map<Long, Glyph> = mapOf(
-    0L to ApplyGlyph,
+    0L to Combinator.Apply,
+    1L to Combinator.I,
+    2L to Combinator.K,
+    5L to Combinator.B,
+    6L to Combinator.C,
+    7L to Combinator.S,
+    8L to Combinator.notK,
     12L to EqualitySign,
     174L to CommunicateAction,
     // constants
-    2L to BooleanGlyph.True,
-    8L to BooleanGlyph.False,
     // operators
     10L to Operator.Negate,
     40L to Operator.IntegerDivision,

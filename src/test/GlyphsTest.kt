@@ -264,7 +264,7 @@ internal class GlyphsTest {
     @Test
     fun parseApplyGlyph() {
         assertEquals(
-            ApplyGlyph, parseGlyph(
+            Combinator.Apply, parseGlyph(
                 bitMapFrom(
                     arrayOf(
                         booleanArrayOf(true, true),
@@ -374,7 +374,7 @@ internal class GlyphsTest {
     @Test
     fun parseFalseConstant() {
         assertEquals(
-            BooleanGlyph.False, parseGlyph(
+            Combinator.notK, parseGlyph(
                 bitMapFrom(
                     arrayOf(
                         booleanArrayOf(true, true, true),
@@ -389,7 +389,7 @@ internal class GlyphsTest {
     @Test
     fun parseTrueConstant() {
         assertEquals(
-            BooleanGlyph.True, parseGlyph(
+            Combinator.K, parseGlyph(
                 bitMapFrom(
                     arrayOf(
                         booleanArrayOf(true, true, true),
